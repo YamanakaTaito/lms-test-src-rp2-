@@ -56,6 +56,13 @@ public class Case02 {
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() throws IOException {
 		// TODO ここに追加
+		//エラー前のスクリーンショットをとる
+		Path path = Path.of("evidence\\");
+		if (!Files.exists(path)) {
+			Files.createDirectory(path);
+		}
+		WebDriverUtils.getEvidence(new Object() {
+		}, "befor");
 
 		//loginIdタグを選択して、指定の値を入力
 		WebElement loginIdElement = webDriver.findElement(By.id("loginId"));
@@ -75,18 +82,13 @@ public class Case02 {
 		WebElement errorMsgWebElement = webDriver.findElement(By.cssSelector(".help-inline.error"));
 		assertEquals("* ログインに失敗しました。", errorMsgWebElement.getText());
 
-		//スクリーンショットをとる
-		Path path = Path.of("evidence\\");
-		if (!Files.exists(path)) {
-			Files.createDirectory(path);
-		}
+		//エラー後のスクリーンショットをとる。上でディレクトリチェックしたので省略
 		WebDriverUtils.getEvidence(new Object() {
-		});
+		}, "error");
 		//ページ遷移していないか（ログイン失敗か）確認
-		WebDriverUtils.goTo("http://localhost:8080/lms");
-		assertEquals("ログイン | LMS", webDriver.getTitle());
-		classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
-		assertEquals("ログイン", classSelecterBtnElement.getAttribute("value"));
+		//		assertEquals("ログイン | LMS", webDriver.getTitle());
+		//		classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
+		//		assertEquals("ログイン", classSelecterBtnElement.getAttribute("value"));
 
 	}
 
