@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import jp.co.sss.lms.ct.util.WebDriverUtils;
 
@@ -67,7 +69,7 @@ public class Case03 {
 			}
 		}
 		WebDriverUtils.getEvidence(new Object() {
-		}, "befor");
+		}, "ログイン画面");
 		//loginIdタグを選択して、指定の値を入力
 		WebElement loginIdElement = webDriver.findElement(By.id("loginId"));
 		loginIdElement.clear();
@@ -76,18 +78,19 @@ public class Case03 {
 		//passwordタグを選択して、指定の値を入力
 		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
-		passwordElement.sendKeys("StudentAA011");
+		passwordElement.sendKeys("studentsTestsAA0012");
 
 		//入力後.btn.btn-primaryをCSSセレクターで選択して、click
 		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
 		classSelecterBtnElement.click();
 		//遷移後、ページ生成とテスト実行と差があるため待機
-		webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs("コース詳細 | LMS"));
 		//ページ遷移したかタイトルで確認
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		//ログイン後のスクリーンショットをとる。上でディレクトリチェックしたので省略
 		WebDriverUtils.getEvidence(new Object() {
-		}, "login");
+		}, "コース詳細画面");
 
 	}
 
