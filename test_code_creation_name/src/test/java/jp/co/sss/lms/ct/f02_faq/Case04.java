@@ -88,7 +88,7 @@ public class Case04 {
 		wait.until(ExpectedConditions.titleIs("コース詳細 | LMS"));
 		//ページ遷移したかタイトルで確認
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
-		//ログイン後のスクリーンショットをとる。上でディレクトリチェックしたので省略
+		//ログイン後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "コース詳細画面");
 	}
@@ -107,6 +107,7 @@ public class Case04 {
 		linkTextElement.click();
 		//ページ遷移したかタイトルで確認
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+		//ページ遷移後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "ヘルプ");
 	}
@@ -128,13 +129,12 @@ public class Case04 {
 				webDriver.switchTo().window(handle);
 			}
 		}
-		//新しいタブに移動する
-		webDriver.switchTo().window(webDriver.getWindowHandle());
 		//遷移後、ページ生成とテスト実行と差があるため待機
 		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.titleIs("よくある質問 | LMS"));
 		//ページ遷移したかタイトルで確認
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+		//タブ切り替え後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "よくある質問");
 
