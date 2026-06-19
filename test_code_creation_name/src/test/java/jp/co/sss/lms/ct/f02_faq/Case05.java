@@ -50,12 +50,17 @@ public class Case05 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		//定数化
+		final String PATH = "evidence\\";
+		final String CHACK_TITLE = "ログイン | LMS";
+		final String CHACK_BUTTON = "ログイン";
+
 		WebDriverUtils.goTo("http://localhost:8080/lms");
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		assertEquals(CHACK_TITLE, webDriver.getTitle());
 		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
-		assertEquals("ログイン", classSelecterBtnElement.getAttribute("value"));
+		assertEquals(CHACK_BUTTON, classSelecterBtnElement.getAttribute("value"));
 		//ログイン画面のスクリーンショットをとる
-		Path path = Path.of("evidence\\");
+		Path path = Path.of(PATH);
 		if (!Files.exists(path)) {
 			try {
 				Files.createDirectory(path);
@@ -70,21 +75,26 @@ public class Case05 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		//入力値を定数で用意
+		final String LOGIN_ID = "StudentAA01";
+		final String PASSWORD = "studentsTestsAA0012";
+		final String CHACK_TITLE = "コース詳細 | LMS";
+
 		//loginIdタグを選択して、指定の値を入力
 		WebElement loginIdElement = webDriver.findElement(By.id("loginId"));
 		loginIdElement.clear();
-		loginIdElement.sendKeys("StudentAA01");
+		loginIdElement.sendKeys(LOGIN_ID);
 		//passwordタグを選択して、指定の値を入力
 		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
-		passwordElement.sendKeys("studentsTestsAA0012");
+		passwordElement.sendKeys(PASSWORD);
 
 		//入力後.btn.btn-primaryをCSSセレクターで選択して、click
 		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
 		classSelecterBtnElement.click();
 		//遷移後、ページ生成とテスト実行と差があるため待機
 		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.titleIs("コース詳細 | LMS"));
+		wait.until(ExpectedConditions.titleIs(CHACK_TITLE));
 		//ページ遷移したかタイトルで確認
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		//ログイン後のスクリーンショットをとる。
@@ -97,6 +107,8 @@ public class Case05 {
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		final String CHACK_TITLE = "ヘルプ | LMS";
+
 		//リストメニューから「ヘルプ」を選択
 		//リストメニューをクリック
 		WebElement menuTextElement = webDriver.findElement(By.linkText("機能"));
@@ -105,7 +117,7 @@ public class Case05 {
 		WebElement linkTextElement = webDriver.findElement(By.linkText("ヘルプ"));
 		linkTextElement.click();
 		//ページ遷移したかタイトルで確認
-		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+		assertEquals(CHACK_TITLE, webDriver.getTitle());
 		//ページ遷移後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "ヘルプ");
@@ -116,14 +128,16 @@ public class Case05 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 		// TODO ここに追加
+		final String CHACK_TITLE = "よくある質問 | LMS";
+
 		//タブ切り替えがあるため、最初のページを基本の識別子とする
-		String main_window_handle = webDriver.getWindowHandle();
+		final String MAIN_WINDO_HANDLE = webDriver.getWindowHandle();
 		//よくある質問リンクをクリック
 		WebElement linkTextElement = webDriver.findElement(By.linkText("よくある質問"));
 		linkTextElement.click();
 		//タブが2つになる。最初のページ以外にアクセスする
 		for (String handle : webDriver.getWindowHandles()) {
-			if (!(main_window_handle == handle)) {
+			if (!(MAIN_WINDO_HANDLE == handle)) {
 				//新しいタブに移動する
 				webDriver.switchTo().window(handle);
 			}
@@ -132,9 +146,9 @@ public class Case05 {
 		webDriver.switchTo().window(webDriver.getWindowHandle());
 		//遷移後、ページ生成とテスト実行と差があるため待機
 		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.titleIs("よくある質問 | LMS"));
+		wait.until(ExpectedConditions.titleIs(CHACK_TITLE));
 		//ページ遷移したかタイトルで確認
-		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+		assertEquals(CHACK_TITLE, webDriver.getTitle());
 		//ページ遷移後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "よくある質問");
@@ -145,10 +159,11 @@ public class Case05 {
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
 		// TODO ここに追加
+		final String KEY_WORD = "助成金";
 		//キーワード検索のid=formで選択し、「助成金」入力後クリックする
 		WebElement keywordElement = webDriver.findElement(By.id("form"));
 		keywordElement.clear();
-		keywordElement.sendKeys("助成金");
+		keywordElement.sendKeys(KEY_WORD);
 		webDriver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		//検索実行とテスト実行と差があるため待機
 		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
@@ -163,7 +178,7 @@ public class Case05 {
 				result = resultElement.getText();
 			}
 		}
-		assertThat(result).contains("助成金");
+		assertThat(result).contains(KEY_WORD);
 		//結果のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, "助成金検索");
