@@ -1,6 +1,13 @@
 package jp.co.sss.lms.ct.f03_report;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Duration;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +16,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト レポート機能
@@ -36,6 +49,27 @@ public class Case08 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		//定数化
+		final String EVIDENCE_DIR_PATH = "evidence\\";
+		final String CHECK_TITLE = "ログイン | LMS";
+		final String LOGIN_BUTTON_TEXT = "ログイン";
+		final String EVIDENCE_FILE_NAME_BASE = "ログイン画面";
+
+		WebDriverUtils.goTo("http://localhost:8080/lms");
+		assertEquals(CHECK_TITLE, webDriver.getTitle());
+		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
+		assertEquals(LOGIN_BUTTON_TEXT, classSelecterBtnElement.getAttribute("value"));
+		//ログイン画面のスクリーンショットをとる
+		Path path = Path.of(EVIDENCE_DIR_PATH);
+		if (!Files.exists(path)) {
+			try {
+				Files.createDirectory(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_BASE);
 	}
 
 	@Test
@@ -43,6 +77,31 @@ public class Case08 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		final String LOGIN_ID = "StudentAA01";
+		final String PASSWORD = "StudentAA01";
+		final String CHECK_TITLE = "コース詳細 | LMS";
+		final String EVIDENCE_FILE_NAME_BASE = "コース詳細画面";
+
+		//loginIdタグを選択して、指定の値を入力
+		WebElement loginIdElement = webDriver.findElement(By.id("loginId"));
+		loginIdElement.clear();
+		loginIdElement.sendKeys(LOGIN_ID);
+		//passwordタグを選択して、指定の値を入力
+		WebElement passwordElement = webDriver.findElement(By.id("password"));
+		passwordElement.clear();
+		passwordElement.sendKeys(PASSWORD);
+
+		//入力後.btn.btn-primaryをCSSセレクターで選択して、click
+		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
+		classSelecterBtnElement.click();
+		//遷移後、ページ生成とテスト実行と差があるため待機
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs(CHECK_TITLE));
+		//ページ遷移したかタイトルで確認
+		assertEquals(CHECK_TITLE, webDriver.getTitle());
+		//ログイン後のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_BASE);
 	}
 
 	@Test
@@ -50,6 +109,21 @@ public class Case08 {
 	@DisplayName("テスト03 提出済の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		final String SUBMIT_BUTTON_SELECTOR = "input.btn.btn-default";
+		final String CHECK_TITLE = "セクション詳細 | LMS";
+		final String EVIDENCE_FILE_NAME_BASE = "セクション詳細";
+		//テスト時、ITリテラシー①項目の2番目（アルゴリズム、フローチャート）は提出済の週報がある
+		List<WebElement> buttonElements = webDriver.findElements(By.cssSelector(SUBMIT_BUTTON_SELECTOR));
+		//対象の詳細ボタンをクリックする。
+		buttonElements.get(1).click();
+		//検索実行とテスト実行と差があるため待機
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs(CHECK_TITLE));
+		//ページ遷移したかタイトルで確認
+		assertEquals(CHECK_TITLE, webDriver.getTitle());
+		//ページ遷移後のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_BASE);
 	}
 
 	@Test
@@ -57,6 +131,21 @@ public class Case08 {
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
 		// TODO ここに追加
+		final String DEFAULT_BUTTON_VALUE = "提出済み週報【デモ】を確認する";
+		final String CHECK_TITLE = "レポート登録 | LMS";
+		final String EVIDENCE_FILE_NAME_BASE = "レポート登録";
+		//btn btn-defaultが複数あるので、value値で指定。レポート画面へ遷移
+		webDriver.findElement(By.cssSelector("Input[value=" + DEFAULT_BUTTON_VALUE + "] ")).click();
+		;
+
+		//検索実行とテスト実行と差があるため待機
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.titleIs(CHECK_TITLE));
+		//ページ遷移したかタイトルで確認
+		assertEquals(CHECK_TITLE, webDriver.getTitle());
+		//ページ遷移後のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_BASE);
 	}
 
 	@Test
