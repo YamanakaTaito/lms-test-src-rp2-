@@ -80,7 +80,7 @@ public class Case06 {
 		// TODO ここに追加
 		//入力値を定数で用意
 		final String LOGIN_ID = "StudentAA01";
-		final String PASSWORD = "studentsTestsAA0012";
+		final String PASSWORD = "StudentAA01";
 		final String CHACK_TITLE = "コース詳細 | LMS";
 		final String EVIDENCE_PATH = "コース詳細画面";
 
