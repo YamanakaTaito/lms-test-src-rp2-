@@ -79,7 +79,7 @@ public class Case05 {
 		// TODO ここに追加
 		//入力値を定数で用意
 		final String LOGIN_ID = "StudentAA01";
-		final String PASSWORD = "studentsTestsAA0012";
+		final String PASSWORD = "StudentAA01";
 		final String CHACK_TITLE = "コース詳細 | LMS";
 
 		//loginIdタグを選択して、指定の値を入力
