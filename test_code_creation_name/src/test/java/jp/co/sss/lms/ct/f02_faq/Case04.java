@@ -52,15 +52,7 @@ public class Case04 {
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
 		assertEquals("ログイン", classSelecterBtnElement.getAttribute("value"));
-	}
-
-	@Test
-	@Order(2)
-	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
-	void test02() {
-		// TODO ここに追加
-
-		//ログイン前のスクリーンショットをとる
+		//スクリーンショットをとる
 		Path path = Path.of("evidence\\");
 		if (!Files.exists(path)) {
 			try {
@@ -71,6 +63,14 @@ public class Case04 {
 		}
 		WebDriverUtils.getEvidence(new Object() {
 		}, "ログイン画面");
+	}
+
+	@Test
+	@Order(2)
+	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
+	void test02() {
+		// TODO ここに追加
+
 		//loginIdタグを選択して、指定の値を入力
 		WebElement loginIdElement = webDriver.findElement(By.id("loginId"));
 		loginIdElement.clear();
