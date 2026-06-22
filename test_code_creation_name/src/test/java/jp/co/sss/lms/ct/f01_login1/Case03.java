@@ -78,7 +78,7 @@ public class Case03 {
 		//passwordタグを選択して、指定の値を入力
 		WebElement passwordElement = webDriver.findElement(By.id("password"));
 		passwordElement.clear();
-		passwordElement.sendKeys("studentsTestsAA0012");
+		passwordElement.sendKeys("StudentAA01");
 
 		//入力後.btn.btn-primaryをCSSセレクターで選択して、click
 		WebElement classSelecterBtnElement = webDriver.findElement(By.cssSelector(".btn.btn-primary"));
