@@ -68,6 +68,8 @@ public class Case05 {
 				e.printStackTrace();
 			}
 		}
+		WebDriverUtils.getEvidence(new Object() {
+		}, "ログイン画面");
 	}
 
 	@Test
