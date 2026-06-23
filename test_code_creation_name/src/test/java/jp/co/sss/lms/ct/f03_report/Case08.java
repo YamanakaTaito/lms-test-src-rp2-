@@ -77,6 +77,7 @@ public class Case08 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		//定数化
 		final String LOGIN_ID = "StudentAA01";
 		final String PASSWORD = "StudentAA01";
 		final String CHECK_TITLE = "コース詳細 | LMS";
@@ -154,14 +155,14 @@ public class Case08 {
 	void test05() {
 		// TODO ここに追加
 		//定数化
-		final String TEXTAREA_TEXT = "content_1";
+		final String TEXTAREA_SELECTOR = "content_1";
 		final String UPDATE_REPORT_TEXT = "週報のサンプルを変更しました。";
 		final String EVIDENCE_FILE_NAME_TEXTAREA = "テキストエリア入力";
 		final String SUBMIT_BUTTON_SELECTOR = ".btn.btn-primary";
 		final String EVIDENCE_FILE_NAME_BASE = "セクション詳細";
 		final String CHECK_TITLE = "セクション詳細 | LMS";
 		//textarea「所感」のテキストボックスを指定して、修正する
-		WebElement textElement = webDriver.findElement(By.id(TEXTAREA_TEXT));
+		WebElement textElement = webDriver.findElement(By.id(TEXTAREA_SELECTOR));
 		textElement.clear();
 		textElement.sendKeys(UPDATE_REPORT_TEXT);
 		//textareaに入力したスクリーンショット
