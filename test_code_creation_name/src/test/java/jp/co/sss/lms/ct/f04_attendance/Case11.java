@@ -77,6 +77,7 @@ public class Case11 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		//定数化
 		final String LOGIN_ID = "StudentAA01";
 		final String PASSWORD = "StudentAA01";
 		final String CHECK_TITLE = "コース詳細 | LMS";
@@ -155,10 +156,21 @@ public class Case11 {
 
 		//定数化
 		final String ATTENDANCE_ROW_SELECTOR = "table tr";
-		final String SELECT_SELECTOR_PREFIX = "select[name=";
 		final String SELECTED_OPTION_SELECTOR_SUFFIX = " option[selected=\"selected\"]";
 		final String VALUE_ATTRIBUTE = "value";
-		final String CHECK_URL = "lms/attendance/detail";
+		final String LINK_TEXT_UPDATE = "勤怠情報を直接編集する";
+		final String SCROLL_PIXELS = "300";
+		final String UPDATE_BUTTON_SELECTOR = ".btn.btn-info.update-button";
+		final String ROW_SELECTOR = "tbody.db tr";
+		final String TAG_NAME_TD = "td";
+		final String ABSENT_TEXT = "欠席";
+		final String EVIDENCE_FILE_NAME_INPUT_BEFOR = "打刻する画面";
+		final String EVIDENCE_FILE_NAME_INPUT_AFTER = "打刻した画面";
+		final String EVIDENCE_FILE_NAME_BASE = "勤怠情報を直接編集する画面";
+
+		//実施前のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_INPUT_BEFOR);
 
 		List<WebElement> attendanceRowWebElements = webDriver.findElements(By.cssSelector(ATTENDANCE_ROW_SELECTOR));
 		for (int i = 1; i < attendanceRowWebElements.size(); i++) {
@@ -180,14 +192,17 @@ public class Case11 {
 
 				if (!(attendanceRowWebElements.get(i).getText().contains("欠席"))) {
 					attendanceRowWebElements.get(i).findElement(By.tagName("button")).click();
+
 				}
 			}
-
 		}
+		//入力後のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_INPUT_AFTER);
 		//画面表示のためスクロール
-		WebDriverUtils.scrollBy("300");
+		WebDriverUtils.scrollBy(SCROLL_PIXELS);
 		//最後に更新ボタンを押す
-		webDriver.findElement(By.cssSelector(".btn.btn-info.update-button")).click();
+		webDriver.findElement(By.cssSelector(UPDATE_BUTTON_SELECTOR)).click();
 
 		//アラートのポップアップ画面が出るため待機
 		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
@@ -196,16 +211,19 @@ public class Case11 {
 		webDriver.switchTo().alert().accept();
 
 		//今回は、リンクでページ遷移を判定
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("勤怠情報を直接編集する")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText(LINK_TEXT_UPDATE)));
 		//表示部のtr取得
-		List<WebElement> tempElements = webDriver.findElements(By.cssSelector("tbody.db tr"));
-		for (WebElement tempElement : tempElements) {
-			List<WebElement> temp1Elements = tempElement.findElements(By.tagName("td"));
+		List<WebElement> attendanceHistoryRows = webDriver.findElements(By.cssSelector(ROW_SELECTOR));
+		for (WebElement row : attendanceHistoryRows) {
+			List<WebElement> cells = row.findElements(By.tagName(TAG_NAME_TD));
 			//１件打刻がないかつ欠席のデータもないものが存在した場合テストは失敗
-			if ((temp1Elements.get(2).getText().isEmpty()) && !(temp1Elements.get(5).getText().contains("欠席"))) {
+			if ((cells.get(2).getText().isEmpty()) && !(cells.get(5).getText().contains(ABSENT_TEXT))) {
 				assertTrue(false);
 			}
 		}
+		//実施後のスクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NAME_BASE);
 
 	}
 
