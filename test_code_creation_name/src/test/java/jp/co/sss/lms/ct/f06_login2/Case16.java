@@ -152,7 +152,6 @@ public class Case16 {
 		final String ALELT_BUTTON_UPDATE_SELECTOR = "upd-btn";
 		final String ERROR_SELECTOR = "li span.help-inline.error";
 		final String ERROR_MSG_CURRENT_PASSWORD_REQUIRED = "現在のパスワードは必須です。";
-		final String EVIDENCE_FILE_PASSWORD_INPUT = "パスワード入力後画面";
 		final String EVIDENCE_FILE_PASSWORD_REQUIRED_ERROR = "パスワードを未入力で「変更」のエラー";
 
 		//現在のパスワード入力（未入力）
@@ -168,9 +167,6 @@ public class Case16 {
 		confirmPasswordElement.clear();
 		confirmPasswordElement.sendKeys(TEST_DATA_CONFIRM_PASSWORD);
 
-		//入力後のスクリーンショット
-		WebDriverUtils.getEvidence(new Object() {
-		}, EVIDENCE_FILE_PASSWORD_INPUT);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollBy(SCROLL_PIXELS);
 		//入力後変更ボタンクリック
@@ -213,7 +209,6 @@ public class Case16 {
 		final String ALELT_BUTTON_UPDATE_SELECTOR = "upd-btn";
 		final String ERROR_SELECTOR = "li span.help-inline.error";
 		final String ERROR_MSG_CURRENT_PASSWORD_LENGTH_EXCEEDS_MAX = "パスワードの長さが最大値(20)を超えています。";
-		final String EVIDENCE_FILE_PASSWORD_INPUT = "パスワード入力後画面";
 		final String EVIDENCE_FILE_PASSWORD_LENGTH_ERROR = "20文字以上の変更パスワードを入力し「変更」のエラー";
 		//現在のパスワード入力
 		WebElement currentPasswordElement = webDriver.findElement(By.id(SELECTOR_CURRENT_PASSWORD_INPUT));
@@ -227,9 +222,6 @@ public class Case16 {
 		WebElement confirmPasswordElement = webDriver.findElement(By.id(SELECTOR_CONFIRM_PASSWORD_INPUT));
 		confirmPasswordElement.clear();
 		confirmPasswordElement.sendKeys(TEST_DATA_CONFIRM_PASSWORD_EXCEED_MAX);
-		//入力後のスクリーンショット
-		WebDriverUtils.getEvidence(new Object() {
-		}, EVIDENCE_FILE_PASSWORD_INPUT);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollBy(SCROLL_PIXELS);
 		//入力後変更ボタンクリック
@@ -325,7 +317,6 @@ public class Case16 {
 		final String TEST_DATA_NEW_PASSWORD = "TestPassWord0801";
 		final String TEST_DATA_CONFIRM_PASSWORD_MISMATCH = "TestPassWord0802";
 
-		final String EVIDENCE_FILE_PASSWORD_INPUT = "パスワード入力後画面";
 		final String SCROLL_PIXELS = "1000";
 		final String UPDATE_BUTTON_SELECTOR = "button[type=\"submit\"]";
 		final String ALELT_BUTTON_UPDATE_SELECTOR = "upd-btn";
@@ -345,9 +336,6 @@ public class Case16 {
 		WebElement confirmPasswordElement = webDriver.findElement(By.id(SELECTOR_CONFIRM_PASSWORD_INPUT));
 		confirmPasswordElement.clear();
 		confirmPasswordElement.sendKeys(TEST_DATA_CONFIRM_PASSWORD_MISMATCH);
-		//入力後のスクリーンショット
-		WebDriverUtils.getEvidence(new Object() {
-		}, EVIDENCE_FILE_PASSWORD_INPUT);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollBy(SCROLL_PIXELS);
 		//入力後変更ボタンクリック
