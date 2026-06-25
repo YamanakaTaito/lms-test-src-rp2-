@@ -160,10 +160,13 @@ public class Case12 {
 		final String END_MINUTE_ROW_SELECTOR = "endMinute0";
 		final String EVIDENCE_FILE_NAME_START_HOUR_ERROR = "出勤時間エラー";
 		final String EVIDENCE_FILE_NAME_END_HOUR_ERROR = "退勤時間エラー";
+		final int INDEX_HOUR_9 = 10;
+		final int INDEX_HOUR_EMPTY = 0;
+		final int INDEX_HOUR_18 = 19;
 
 		//出勤時間の時間を未入力であるところに指定
 		Select startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(0);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_EMPTY);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollTo(SCROLL_PIXELS);
 		//クリックする
@@ -181,10 +184,10 @@ public class Case12 {
 		}, EVIDENCE_FILE_NAME_START_HOUR_ERROR);
 		//出勤時間の時間を9:00に指定
 		startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(9);
-		//出勤時間の時間を未入力であるところに指定
+		startHourSelectElement.selectByIndex(INDEX_HOUR_9);
+		//退勤時間の時間を未入力であるところに指定
 		Select endMinuteSelectElement = new Select((webDriver.findElement(By.id(END_MINUTE_ROW_SELECTOR))));
-		endMinuteSelectElement.selectByIndex(0);
+		endMinuteSelectElement.selectByIndex(INDEX_HOUR_EMPTY);
 		//画面表示のためスクロール(メッセージ出るとき上に戻るから)
 		WebDriverUtils.scrollTo(SCROLL_PIXELS);
 		//クリックする
@@ -201,7 +204,7 @@ public class Case12 {
 		}, EVIDENCE_FILE_NAME_END_HOUR_ERROR);
 		//出勤時間の時間を18:00に指定して、リセット
 		endMinuteSelectElement = new Select((webDriver.findElement(By.id(END_MINUTE_ROW_SELECTOR))));
-		endMinuteSelectElement.selectByIndex(18);
+		endMinuteSelectElement.selectByIndex(INDEX_HOUR_18);
 
 	}
 
@@ -219,13 +222,17 @@ public class Case12 {
 		final String SCROLL_PIXELS = "1000";
 		final String CHECK_START_EMPTY_ERROR_MESSAGE = "* 出勤情報がないため退勤情報を入力出来ません。";
 		final String EVIDENCE_FILE_NAME_START_EMPTY_ERROR = "出勤時間空白エラー";
+		final int INDEX_HOUR_9 = 10;
+		final int INDEX_MINUTE_00 = 1;
+		final int INDEX_HOUR_EMPTY = 0;
+		final int INDEX_MINUTE_EMPTY = 0;
 
 		//出勤時間の時間を未入力であるところに指定
 		Select startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(0);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_EMPTY);
 		//出勤時間の分を未入力であるところに指定
 		Select startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startMinuteSelectElement.selectByIndex(0);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_EMPTY);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollTo(SCROLL_PIXELS);
 		//クリックする
@@ -245,8 +252,8 @@ public class Case12 {
 		//出勤時間の時間を9:00に指定。
 		startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
 		startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(9);
-		startMinuteSelectElement.selectByIndex(1);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_9);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_00);
 
 	}
 
@@ -254,7 +261,8 @@ public class Case12 {
 	@Order(7)
 	@DisplayName("テスト07 不適切な内容で修正してエラー表示：出勤が退勤よりも遅い時間")
 	void test07() {
-		// TODO ここに追加
+		// TODO ここに追加		
+		//定数化
 		final String START_HOUR_ROW_SELECTOR = "startHour0";
 		final String START_MINUTE_ROW_SELECTOR = "startMinute0";
 		final String UPDATE_BUTTON_SELECTOR = ".btn.btn-info.update-button";
@@ -262,13 +270,16 @@ public class Case12 {
 		final String SCROLL_PIXELS = "1000";
 		final String CHECK_START_LATER_THAN_END_ERROR_MESSAGE = "* 退勤時刻[0]は出勤時刻[0]より後でなければいけません。";
 		final String EVIDENCE_FILE_NAME_START_LATER_THAN_END_ERROR = "出勤が退勤よりも遅いエラー";
+		final int INDEX_HOUR_9 = 10;
+		final int INDEX_MINUTE_00 = 1;
+		final int INDEX_HOUR_19 = 20;
 
 		//出勤時間の時間を19:00に指定
 		Select startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(20);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_19);
 
 		Select startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startMinuteSelectElement.selectByIndex(1);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_00);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollTo(SCROLL_PIXELS);
 		//クリックする
@@ -288,8 +299,8 @@ public class Case12 {
 		//出勤時間の時間を9:00に指定。
 		startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
 		startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(9);
-		startMinuteSelectElement.selectByIndex(1);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_9);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_00);
 	}
 
 	@Test
@@ -297,6 +308,7 @@ public class Case12 {
 	@DisplayName("テスト08 不適切な内容で修正してエラー表示：出退勤時間を超える中抜け時間")
 	void test08() {
 		// TODO ここに追加
+		//定数化
 		final String START_HOUR_ROW_SELECTOR = "startHour0";
 		final String START_MINUTE_ROW_SELECTOR = "startMinute0";
 		final String SELECT_NAME_ROW_SELECTOR = "select[name=\"attendanceList[0].blankTime\"]";
@@ -305,15 +317,20 @@ public class Case12 {
 		final String SCROLL_PIXELS = "1000";
 		final String CHECK_BREAK_EXCEEDS_WORKING_HOURS_ERROR_MESSAGE = "* 中抜け時間が勤務時間を超えています。";
 		final String EVIDENCE_FILE_NAME_BREAK_TIME_ERROR = "出退勤時間を超える中抜け時間のエラー";
+		final int INDEX_HOUR_12 = 13;
+		final int INDEX_MINUTE_00 = 1;
+		final int INDEX_BLANK_TIME_7H_45M = 31;
+		final int INDEX_HOUR_9 = 10;
+		final int INDEX_BLANK_EMPTY = 0;
 
 		//出勤時間の時間を12:00に指定
 		Select startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(12);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_12);
 		Select startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startMinuteSelectElement.selectByIndex(1);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_00);
 		//中抜け時間の設定(7時45分)
 		Select blankTimeSelectElement = new Select((webDriver.findElement(By.cssSelector(SELECT_NAME_ROW_SELECTOR))));
-		blankTimeSelectElement.selectByIndex(31);
+		blankTimeSelectElement.selectByIndex(INDEX_BLANK_TIME_7H_45M);
 		//画面表示のためスクロール
 		WebDriverUtils.scrollTo(SCROLL_PIXELS);
 		//クリックする
@@ -332,8 +349,11 @@ public class Case12 {
 		//出勤時間の時間を9:00に指定。
 		startHourSelectElement = new Select((webDriver.findElement(By.id(START_HOUR_ROW_SELECTOR))));
 		startMinuteSelectElement = new Select((webDriver.findElement(By.id(START_MINUTE_ROW_SELECTOR))));
-		startHourSelectElement.selectByIndex(9);
-		startMinuteSelectElement.selectByIndex(1);
+		startHourSelectElement.selectByIndex(INDEX_HOUR_9);
+		startMinuteSelectElement.selectByIndex(INDEX_MINUTE_00);
+		//中抜け時間の設定(未入力)
+		blankTimeSelectElement = new Select((webDriver.findElement(By.cssSelector(SELECT_NAME_ROW_SELECTOR))));
+		blankTimeSelectElement.selectByIndex(INDEX_BLANK_EMPTY);
 
 	}
 
@@ -342,6 +362,36 @@ public class Case12 {
 	@DisplayName("テスト09 不適切な内容で修正してエラー表示：備考が100文字超")
 	void test09() {
 		// TODO ここに追加
+		//定数化
+		final String SELECTOR_NOTE_INPUT = "input[name=\"attendanceList[0].note\"]";
+		final String TEST_DATA_NOTE_EXCEEDING_MAX = "あ".repeat(101);
+		final String UPDATE_BUTTON_SELECTOR = ".btn.btn-info.update-button";
+		final String ERROR_SELECTOR = ".help-inline.error";
+		final String SCROLL_PIXELS = "1000";
+		final String ERROR_MSG_NOTE_LENGTH_EXCEEDS_MAX = "* 備考の長さが最大値(100)を超えています。";
+		final String EVIDENCE_FILE_NOTE_LENGTH_ERROR = "不適切な内容で修正してエラー表示：備考が100文字超のエラー";
+		//備考に値を入力
+		WebElement noteInputElement = webDriver.findElement(By.cssSelector(SELECTOR_NOTE_INPUT));
+		noteInputElement.clear();
+		noteInputElement.sendKeys(TEST_DATA_NOTE_EXCEEDING_MAX);
+		//画面表示のためスクロール
+		WebDriverUtils.scrollTo(SCROLL_PIXELS);
+		//クリックする
+		webDriver.findElement(By.cssSelector(UPDATE_BUTTON_SELECTOR)).click();
+		//アラートのポップアップ画面が出るため待機
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.alertIsPresent());
+		//アラートのポップアップ画面処理
+		webDriver.switchTo().alert().accept();
+		//アラートメッセージの取得
+		WebElement startLaterThanEndErrorElement = webDriver.findElement(By.cssSelector(ERROR_SELECTOR));
+		assertEquals(ERROR_MSG_NOTE_LENGTH_EXCEEDS_MAX, startLaterThanEndErrorElement.getText());
+		//スクリーンショットをとる。
+		WebDriverUtils.getEvidence(new Object() {
+		}, EVIDENCE_FILE_NOTE_LENGTH_ERROR);
+		//備考に値をクリア
+		noteInputElement = webDriver.findElement(By.cssSelector(SELECTOR_NOTE_INPUT));
+		noteInputElement.clear();
 	}
 
 }
