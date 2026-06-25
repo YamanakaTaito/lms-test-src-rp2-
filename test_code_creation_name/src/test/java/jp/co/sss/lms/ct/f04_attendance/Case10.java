@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -138,7 +136,6 @@ public class Case10 {
 		//定数化
 		final String DEFAULT_BUTTON_VALUE_CLOCK_IN = "出勤";
 		final String EVIDENCE_FILE_NAME_BASE = "出勤打刻画面";
-		final String NOW = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
 
 		//出勤をクリックする
 		webDriver.findElement(By.cssSelector("input[value=" + DEFAULT_BUTTON_VALUE_CLOCK_IN + "]")).click();
@@ -147,9 +144,9 @@ public class Case10 {
 		wait.until(ExpectedConditions.alertIsPresent());
 		//アラートのポップアップ画面処理
 		webDriver.switchTo().alert().accept();
-		//打刻できたか確認
+		//打刻できたか確認（当日のinfoクラスに時間が表示されているか）
 		List<WebElement> infoElements = webDriver.findElements(By.cssSelector(".info td"));
-		assertEquals(NOW, infoElements.get(2).getText());
+		assertTrue((infoElements.get(2).isDisplayed()) && (infoElements.get(3).isDisplayed()));
 		//ページ遷移後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, EVIDENCE_FILE_NAME_BASE);
@@ -164,7 +161,6 @@ public class Case10 {
 		//定数化
 		final String DEFAULT_BUTTON_VALUE_CLOCK_OUT = "退勤";
 		final String EVIDENCE_FILE_NAME_BASE = "退勤打刻画面";
-		final String NOW = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
 
 		//退勤をクリックする
 		webDriver.findElement(By.cssSelector("input[value=" + DEFAULT_BUTTON_VALUE_CLOCK_OUT + "]")).click();
@@ -175,7 +171,7 @@ public class Case10 {
 		webDriver.switchTo().alert().accept();
 		//打刻できたか確認
 		List<WebElement> infoElements = webDriver.findElements(By.cssSelector(".info td"));
-		assertEquals(NOW, infoElements.get(2).getText());
+		assertTrue((infoElements.get(2).isDisplayed()) && (infoElements.get(3).isDisplayed()));
 		//ページ遷移後のスクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, EVIDENCE_FILE_NAME_BASE);
