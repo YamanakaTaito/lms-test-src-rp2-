@@ -1,7 +1,6 @@
 package jp.co.sss.lms.ct.f05_exam;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -319,11 +318,11 @@ public class Case14 {
 		List<WebElement> currentResultElements = examResultElements.get(FOURTH_EXAM_INDEX)
 				.findElements(By.tagName(CUURENT_RESULT_SELECTOR));
 		//4回目かチェック
-		assertThat(currentResultElements.get(FOURTH_EXAM_NAME_INDEX).getText().contains(FOURTH_EXAM));
+		assertTrue(currentResultElements.get(FOURTH_EXAM_NAME_INDEX).getText().contains(FOURTH_EXAM));
 		//点数チェック
-		assertThat(currentResultElements.get(FOURTH_EXAM_SCORE_INDEX).getText().contains(FOURTH_EXAM_SCORE));
+		assertTrue(currentResultElements.get(FOURTH_EXAM_SCORE_INDEX).getText().contains(FOURTH_EXAM_SCORE));
 		//日付チェック
-		assertThat(currentResultElements.get(FOURTH_EXAM_DATE_INDEX).getText().contains(NOW));
+		assertTrue(currentResultElements.get(FOURTH_EXAM_DATE_INDEX).getText().contains(NOW));
 		//スクリーンショットをとる。
 		WebDriverUtils.getEvidence(new Object() {
 		}, EVIDENCE_FILE_NAME_BASE);
