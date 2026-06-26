@@ -110,6 +110,8 @@ public class Case08 {
 	@DisplayName("テスト03 提出済の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		//定数化
+
 		final String SUBMIT_BUTTON_SELECTOR = "input.btn.btn-default";
 		final String CHECK_TITLE = "セクション詳細 | LMS";
 		final String EVIDENCE_FILE_NAME_BASE = "セクション詳細";
